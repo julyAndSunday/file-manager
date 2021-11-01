@@ -4,7 +4,5 @@
 
 
 
-![image-20211101212959478](C:\Users\PC\AppData\Roaming\Typora\typora-user-images\image-20211101212959478.png)
-
 
 
