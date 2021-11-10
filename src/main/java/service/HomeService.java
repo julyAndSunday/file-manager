@@ -51,7 +51,6 @@ public class HomeService {
         HomeDto homeDto = new HomeDto(home, user);
         String url = buildUrl(JOIN);
         String response = HttpUtil.post(url, homeDto);
-        System.out.println(response);
         R r = JSONObject.parseObject(response, R.class);
         Integer homeId = (Integer) r.getData();
         return p2PClient.connect(homeId);

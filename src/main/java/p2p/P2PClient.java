@@ -23,12 +23,9 @@ public class P2PClient {
             SocketAddress localAddress;
             socket = SocketChannel.open();
             socket.setOption(StandardSocketOptions.SO_REUSEADDR, true);
-//            socket.setReuseAddress(true);
             socket.connect(new InetSocketAddress("120.79.220.182", 9090));
             localAddress = socket.getLocalAddress();
-//            localAddress = socket.getLocalSocketAddress();
             InetSocketAddress address = (InetSocketAddress) localAddress;
-            //发送homeId和本地ip
             byte[] bytes = String.valueOf((homeId) + "&" + address.toString()).getBytes();
             ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
             socket.write(byteBuffer);
@@ -45,24 +42,16 @@ public class P2PClient {
         try {
             ByteBuffer allocate = ByteBuffer.allocate(128);
             //阻塞接收服务器发送对端的地址
-//            socket.configureBlocking(true);
             socket.read(allocate);
             String address = new String(allocate.array());
             String[] split = address.trim().substring(1).split(":");
-            System.out.println(address);
+//            System.out.println(address);
             String ip = split[0];
             int port = Integer.parseInt(split[1]);
             socket = SocketChannel.open();
             socket.setOption(StandardSocketOptions.SO_REUSEADDR, true);
-//            socket.configureBlocking(true);
             socket.bind(localAddress);
             socket.connect(new InetSocketAddress(ip, port));
-//            double random = Math.random();
-//            System.out.println("send" + random);
-//            socket.write(ByteBuffer.wrap(("hello" + random).getBytes()));
-//            allocate.clear();
-//            socket.read(allocate);
-//            System.out.println(new String(allocate.array()));
             return socket;
         } catch (IOException e) {
             e.printStackTrace();
