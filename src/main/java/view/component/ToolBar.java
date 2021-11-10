@@ -5,7 +5,6 @@ import view.FileSelectView;
 import view.SelectView;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 
 /**
  * @Description:
@@ -17,71 +16,55 @@ public class ToolBar extends JToolBar {
     private SelectView selectView;
     private FileSelectView fileSelectView;
     private FileService fileService;
-    public ToolBar(ScrollPanel scrollPanel){
+
+    public ToolBar(ScrollPanel scrollPanel) {
         this.scrollPanel = scrollPanel;
         this.selectView = new SelectView(scrollPanel);
         this.fileSelectView = new FileSelectView(scrollPanel);
         JButton ret = new JButton("返回");
-        ret.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               scrollPanel.back_path();
-            }
+        ret.addActionListener(e -> {
+            scrollPanel.back_path();
         });
-//
 
         JButton select = new JButton("全选");
-        select.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                scrollPanel.selectAll();
-            }
+        select.addActionListener(e -> {
+            scrollPanel.selectAll();
         });
+
         JButton classifySelect = new JButton("条件选择");
-        classifySelect.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectView.setVisible(true);
-            }
+        classifySelect.addActionListener(e -> {
+            selectView.setVisible(true);
         });
+
         JButton copy = new JButton("拷贝到");
-        copy.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fileSelectView.setOperate("拷贝");
-                fileSelectView.setVisible(true);
-            }
+        copy.addActionListener(e -> {
+            fileSelectView.setOperate("拷贝");
+            fileSelectView.setVisible(true);
         });
+
         JButton move = new JButton("移动到");
-        move.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        move.addActionListener(e->{
                 fileSelectView.setOperate("移动");
                 fileSelectView.setVisible(true);
-            }
         });
+
         JButton delete = new JButton("删除");
-        delete.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JButton jButton = new JButton("确定");
-                TipView tipView = new TipView("确定删除吗", jButton);
-                jButton.addActionListener(new AbstractAction() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        fileService.delete(scrollPanel.getSelectFiles());
-                        tipView.setVisible(false);
-                    }
-                });
-            }
+        delete.addActionListener(e1 -> {
+            JButton jButton = new JButton("确定");
+            ConfirmView confirmView = new ConfirmView("确定删除吗", jButton);
+            jButton.addActionListener(e2 -> {
+                fileService.delete(scrollPanel.getSelectFiles());
+                confirmView.setVisible(false);
+            });
         });
+
         add(ret);
         add(select);
         add(classifySelect);
         add(copy);
         add(move);
         add(delete);
-        setBounds(5,10,600,50);
+        setBounds(5, 10, 600, 50);
 //
     }
 

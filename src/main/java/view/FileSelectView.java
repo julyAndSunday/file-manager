@@ -2,7 +2,7 @@ package view;
 
 import service.FileService;
 import view.component.ScrollPanel;
-import view.component.TipView;
+import view.component.ConfirmView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -49,7 +49,7 @@ public class FileSelectView extends JFrame {
                 String operate = operateButton.getText();
                 String tip = operate + "到：" + toPath ;
                 JButton confirm = new JButton("确定");
-                TipView tipView= new TipView(tip, confirm);
+                ConfirmView confirmView = new ConfirmView(tip, confirm);
                 confirm.addActionListener(new AbstractAction() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -59,7 +59,7 @@ public class FileSelectView extends JFrame {
                             fileService.copy(scrollPanel.getSelectFiles(),toPath);
                         }
                         scrollPanel.reFresh();
-                        tipView.setVisible(false);
+                        confirmView.setVisible(false);
                         setVisible(false);
                     }
                 });
